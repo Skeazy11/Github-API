@@ -20,12 +20,28 @@ function clearResults() {
     }
 }
 
-function createResults(title, text, hr, link) {
+function createResults(title, text, hr, link, errorMessage) {
     if (link !== true) {
-        let p = document.createElement("P");
-        let textNode = document.createTextNode(title + text);
-        p.appendChild(textNode);
-        displayInfoArea.appendChild(p);
+        if (errorMessage) {
+            let p = document.createElement("P");
+            let strong = document.createElement("strong");
+
+            let textNode = document.createTextNode(title);
+            let strongText = document.createTextNode(text);
+
+            p.appendChild(textNode);
+            strong.appendChild(strongText);
+            p.appendChild(strong);
+            p.classList.add("error");
+            displayInfoArea.appendChild(p);
+
+        } else {
+            let p = document.createElement("P");
+            let textNode = document.createTextNode(title + text);
+            p.appendChild(textNode);
+            displayInfoArea.appendChild(p);
+
+        }
     }
     if (link === true) {
         let p = document.createElement("P");
@@ -41,55 +57,70 @@ function createResults(title, text, hr, link) {
     }
 
     if (hr === true) {
-        let hr = document.createElement("hr");
+        let hr = document.createElement("hr")
         displayInfoArea.appendChild(hr);
     }
+}
+
+// Function that checks if a string has spaces
+function isSpace(str) {
+    return str.match(/\s/) !== null;
 }
 
 function apiGet() {
     clearResults();
     let value = inp.value;
-    if (value != "") {
+    if (value != "" && !isSpace(value)) {
         getUserAsync(value).then(function(result) {
-            createResults("Name: ", result.name);
-            createResults("Account Type: ", result.type);
-            createResults("Public Repos: ", result.public_repos, true);
 
-            if (result.public_repos > 0) {
-                getUserRepros(value).then(function(repo) {
-                    // console.log(repo);
-                    for (let i = 0; i < repo.length; i++) {
-                        const e = repo[i];
-                        let j = i + 1;
-                        createResults("#" + j +" Repo name: ", e.name);
-                        if(e.description !== null) {
-                            createResults("Description: ", e.description);
-                        }
-                        else {
-                            createResults("Description: ", "-");
-                        }
-                        if(e.language !== null) {
-                            createResults("Language: ", e.language);
-                        }
-                        else {
-                            createResults("Language: ", "-");
-                        }
-                        
-                        createResults("Link: ", e.html_url, true, true);
+            if (result.message !== "Not Found") {
+                if (result.name !== null) {
+                    createResults("Name: ", result.name);
+                } else {
+                    createResults("Name: ", "-");
+                }
+                createResults("Username: ", result.login);
+                createResults("Account Type: ", result.type);
+                createResults("Public Repos: ", result.public_repos, true);
 
-                    }
-                });
+                if (result.public_repos > 0) {
+                    getUserRepros(value).then(function(repo) {
+                        // console.log(repo);
+                        for (let i = 0; i < repo.length; i++) {
+                            const e = repo[i];
+                            let j = i + 1;
+                            createResults("#" + j + " Repo name: ", e.name);
+                            if (e.description !== null) {
+                                createResults("Description: ", e.description);
+                            } else {
+                                createResults("Description: ", "-");
+                            }
+                            if (e.language !== null) {
+                                createResults("Language: ", e.language);
+                            } else {
+                                createResults("Language: ", "-");
+                            }
+
+                            createResults("Link: ", e.html_url, true, true);
+
+                        }
+                    });
+                }
+            } else {
+                createResults("No user account found for: ", value, false, false, true);
             }
         });
 
     } else {
-        console.log("not found");
+        createResults("Please make sure there are no spaces within the username. Invalid username: ", value, false, false, true)
     }
 }
+
+
 
 btn.addEventListener("click", apiGet);
 inp.addEventListener("keyup", event => {
     if (event.keyCode === 13) {
-      apiGet();
+        apiGet();
     }
-  });
+});

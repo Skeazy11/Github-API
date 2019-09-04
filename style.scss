@@ -54,6 +54,16 @@ hr {
     margin: 20px 0 20px 0;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
     color: blueviolet;
+}
+
+.error {
+    font-size: 25px;
+    text-align: center;
+}
+
+strong {
+    color: red;
 }
