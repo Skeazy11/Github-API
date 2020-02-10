@@ -44,7 +44,7 @@ html {
 
 .container .display-info-area {
   height: auto;
-  width: 50%;
+  max-width: 90vw;
   font-size: 18px;
 }
 
@@ -55,7 +55,6 @@ button {
 }
 
 input {
-  width: 400px;
   height: 50px;
   text-align: center;
 }
@@ -83,5 +82,11 @@ a:visited {
 
 strong {
   color: red;
+}
+
+@media (min-width: 420px) {
+  .input {
+      width: 400px;
+  }
 }
 /*# sourceMappingURL=style.css.map */
