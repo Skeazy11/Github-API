@@ -21,6 +21,9 @@ function clearResults() {
 }
 
 function createResults(title, text, hr, link, errorMessage) {
+
+    let div = document.createElement("DIV");
+
     if (link !== true) {
         if (errorMessage) {
             let p = document.createElement("P");
@@ -33,14 +36,13 @@ function createResults(title, text, hr, link, errorMessage) {
             strong.appendChild(strongText);
             p.appendChild(strong);
             p.classList.add("error");
-            displayInfoArea.appendChild(p);
+            div.appendChild(p);
 
         } else {
             let p = document.createElement("P");
             let textNode = document.createTextNode(title + text);
             p.appendChild(textNode);
-            displayInfoArea.appendChild(p);
-
+            div.appendChild(p);
         }
     }
     if (link === true) {
@@ -53,13 +55,15 @@ function createResults(title, text, hr, link, errorMessage) {
         a.appendChild(aTitle);
         p.appendChild(pTitle);
         p.appendChild(a);
-        displayInfoArea.appendChild(p);
+        div.appendChild(p);
     }
 
     if (hr === true) {
         let hr = document.createElement("hr")
         displayInfoArea.appendChild(hr);
     }
+
+    displayInfoArea.appendChild(div);
 }
 
 // Function that checks if a string has spaces
