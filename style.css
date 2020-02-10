@@ -28,7 +28,7 @@ html {
 
 .container .search-area {
   height: 150px;
-  width: 400px;
+  width: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,7 +44,7 @@ html {
 
 .container .display-info-area {
   height: auto;
-  max-width: 90vw;
+  width: 90vw;
   font-size: 18px;
 }
 
@@ -55,6 +55,7 @@ button {
 }
 
 input {
+  width: 90vw;
   height: 50px;
   text-align: center;
 }
@@ -84,9 +85,12 @@ strong {
   color: red;
 }
 
-@media (min-width: 420px) {
-  .input {
-      width: 400px;
+@media (min-width: 400px) {
+  input, .search-area {
+    width: 400px;
+  }
+  .container .display-info-area {
+    width: 60vw;
   }
 }
 /*# sourceMappingURL=style.css.map */

@@ -18,7 +18,7 @@ html {
     align-items: center;
     & .search-area {
         height: 150px;
-        width: 400px;
+        width: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -26,7 +26,7 @@ html {
     }
     & .display-info-area {
         height: auto;
-        width: 50%;
+        width: 90vw;
         font-size: 18px;
     }
 }
@@ -69,7 +69,10 @@ strong {
 }
 
 @media (min-width: 400px) {
-    .input {
+    input, .search-area {
         width: 400px;
+    }
+    .container .display-info-area {
+        width: 60vw;
     }
 }
