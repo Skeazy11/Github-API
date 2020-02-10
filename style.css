@@ -48,7 +48,7 @@ html {
   font-size: 18px;
 }
 
-.container .display-info-area p a {
+.container .display-info-area p, .container .display-info-area p a {
   word-break: break-all;
 }
 
